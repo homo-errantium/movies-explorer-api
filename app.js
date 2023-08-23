@@ -26,11 +26,11 @@ const options = {
 };
 
 const app = express();
-const auth = require('./middlewares/auth');
-const {
-  validationLogin,
-  validationCreateUser,
-} = require('./middlewares/validation/validationUser');
+// const auth = require('./middlewares/auth');
+// const {
+//   validationLogin,
+//   validationCreateUser,
+// } = require('./middlewares/validation/validationUser');
 
 app.use('*', cors(options));
 app.use(express.json());
@@ -38,10 +38,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(helmet());
 
-const { users } = require('./routes/users');
-const { movies } = require('./routes/movies');
-const { wrongRouter } = require('./routes/wrongRoutes');
-const { createUser, login } = require('./controllers/users');
+const router = require('./routes/index');
 
 mongoose
   .connect(DB_URL, {
@@ -57,12 +54,7 @@ mongoose
 
 app.use(requestLogger);
 
-app.post('/signup', validationCreateUser, createUser);
-app.post('/signin', validationLogin, login);
-
-app.use('/users', auth, users);
-app.use('/movies', auth, movies);
-app.use('*', wrongRouter);
+app.use(router);
 
 app.use(errorLogger);
 app.use(errors());
