@@ -55,7 +55,7 @@ module.exports.deleteMovie = (req, res, next) => {
       if (req.user._id !== owner) {
         return next(
           new ForbiddenError(
-            'У Вас недостаточно прав для совершения данной операции.',
+            'У Вас недостаточно прав для совершения данной операции',
           ),
         );
       }

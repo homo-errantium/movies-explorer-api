@@ -57,7 +57,6 @@ const movieSchema = new mongoose.Schema(
     movieId: {
       type: Number,
       required: true,
-      // ref: 'movie',
     },
     nameRU: {
       type: String,
@@ -72,13 +71,3 @@ const movieSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model('movie', movieSchema);
-
-// avatar: {
-//   type: String,
-//   validate: {
-//     validator: (v) => validator.isURL(v),
-//     message: 'Некорректный URL',
-//   },
-//   default:
-//     'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
-// },

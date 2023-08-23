@@ -10,12 +10,12 @@ const {
 } = require('../middlewares/validation/validationMovie');
 
 // возвращает все карточки
-movies.get('/movies', getAllMovies);
+movies.get('/', getAllMovies);
 
 // создаёт карточку
-movies.post('/movies', validationCreateMovie, createMovie);
+movies.post('/', validationCreateMovie, createMovie);
 
 // удаляет карточку по _id
-movies.delete('/movies/:movieId', validationMovieID, deleteMovie);
+movies.delete('/:movieId', validationMovieID, deleteMovie);
 
 module.exports = { movies }; // экспортировали роутер

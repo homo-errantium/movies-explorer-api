@@ -13,10 +13,10 @@ const { PORT = 4000, DB_URL = 'mongodb://127.0.0.1:27017/bitfilmsdb' } = process
 const options = {
   origin: [
     'http://localhost:4000',
-    // 'http://my.place.nomoreparties.co',
-    'https://my.place.nomoreparties.co',
-    // 'http://api.my.place.nomoreparties.co',
-    'https://api.my.place.nomoreparties.co',
+    // 'http://my.films.nomoredomainsicu.ru',
+    'https://my.films.nomoredomainsicu.ru',
+    // 'http://api.my.films.nomoredomainsicu.ru',
+    'https://api.my.films.nomoredomainsicu.ru',
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,
@@ -75,6 +75,4 @@ app.use((err, req, res, next) => {
   next();
 });
 
-app.listen(PORT, () => {
-  console.log(`port is ${PORT}`);
-});
+app.listen(PORT, () => {});

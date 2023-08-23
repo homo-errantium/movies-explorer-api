@@ -8,11 +8,7 @@ const AuthError = require('../errors/AuthError');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 const ConflictError = require('../errors/ConflictError');
-const {
-  CREATE_CODE,
-  SUCCES_CODE,
-  secretKey,
-} = require('../utils/constants');
+const { CREATE_CODE, SUCCES_CODE, secretKey } = require('../utils/constants');
 
 // 400 — Переданы некорректные данные при создании пользователя. 500 — На сервере произошла ошибка.
 module.exports.createUser = (req, res, next) => {
@@ -64,7 +60,8 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.getCurrentUser = (req, res, next) => {
-  User.findById(req.user._id)
+  const userId = req.user._id;
+  User.findById(userId)
     .orFail()
     .then((user) => res.status(SUCCES_CODE).send(user))
     .catch((err) => {

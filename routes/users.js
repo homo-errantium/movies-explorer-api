@@ -8,9 +8,9 @@ const {
 } = require('../middlewares/validation/validationUser');
 
 // возвращает информацию о пользователе
-users.get('/users/me', validationUserID, getCurrentUser);
+users.get('/me', validationUserID, getCurrentUser);
 
 // обновляет информацию о пользователе
-users.patch('/users/me', validationUpdateUserInfo, updateUserInfo);
+users.patch('/me', validationUpdateUserInfo, updateUserInfo);
 
 module.exports = { users };
