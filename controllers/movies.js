@@ -41,7 +41,7 @@ module.exports.createMovie = (req, res, next) => {
           'Переданы некорректные данные при создании карточки фильма.',
         );
       }
-      return new ServerError('На сервере произошла ошибка');
+      throw new ServerError('На сервере произошла ошибка');
     })
     .catch(next);
 };
@@ -72,7 +72,7 @@ module.exports.deleteMovie = (req, res, next) => {
       if (err.name === 'CastError') {
         throw new BadRequestError('Введены некорректные данные');
       }
-      return new ServerError('На сервере произошла ошибка');
+      throw new ServerError('На сервере произошла ошибка');
     })
     .catch(next);
 };

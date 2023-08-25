@@ -18,12 +18,12 @@ module.exports.validationLogin = celebrate({
 module.exports.validationUpdateUserInfo = celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),
-    about: Joi.string().min(2).max(30),
+    email: Joi.string().required().email(),
   }),
 });
 
-module.exports.validationUserID = celebrate({
-  params: Joi.object().keys({
-    userId: Joi.string().hex().length(24),
-  }),
-});
+// module.exports.validationUserID = celebrate({
+//   params: Joi.object().keys({
+//     userId: Joi.string().hex().length(24),
+//   }),
+// });

@@ -8,7 +8,8 @@ const AuthError = require('../errors/AuthError');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 const ConflictError = require('../errors/ConflictError');
-const { CREATE_CODE, SUCCES_CODE, secretKey } = require('../utils/constants');
+const { CREATE_CODE, SUCCES_CODE } = require('../utils/constants');
+const { secretKey } = require('../utils/config');
 
 // 400 — Переданы некорректные данные при создании пользователя. 500 — На сервере произошла ошибка.
 module.exports.createUser = (req, res, next) => {
@@ -35,7 +36,7 @@ module.exports.createUser = (req, res, next) => {
           'Переданы некорректные данные при создании пользователя.',
         );
       }
-      return new ServerError('На сервере произошла ошибка');
+      throw new ServerError('На сервере произошла ошибка');
     })
     .catch(next);
 };
@@ -71,7 +72,7 @@ module.exports.getCurrentUser = (req, res, next) => {
       if (err.name === 'CastError') {
         throw new BadRequestError('Введены некорректные данные');
       }
-      return new ServerError('На сервере произошла ошибка');
+      throw new ServerError('На сервере произошла ошибка');
     })
     .catch(next);
 };
@@ -79,10 +80,10 @@ module.exports.getCurrentUser = (req, res, next) => {
 // 400 — Переданы некорректные данные при обновлении профиля.
 // 404 — Пользователь с указанным _id не найден. 500 — На сервере произошла ошибка.
 module.exports.updateUserInfo = (req, res, next) => {
-  const { name } = req.body;
+  const { email, name } = req.body;
   User.findByIdAndUpdate(
     req.user._id,
-    { name },
+    { email, name },
     {
       new: true, // обработчик then получит на вход обновлённую запись
       runValidators: true,
@@ -98,7 +99,7 @@ module.exports.updateUserInfo = (req, res, next) => {
       if (err.name === 'DocumentNotFoundError') {
         throw new NotFoundError('Пользователь по указанному _id не найден.');
       }
-      return new ServerError('На сервере произошла ошибка');
+      throw new ServerError('На сервере произошла ошибка');
     })
     .catch(next);
 };

@@ -4,11 +4,10 @@ const { updateUserInfo, getCurrentUser } = require('../controllers/users');
 
 const {
   validationUpdateUserInfo,
-  validationUserID,
 } = require('../middlewares/validation/validationUser');
 
 // возвращает информацию о пользователе
-users.get('/me', validationUserID, getCurrentUser);
+users.get('/me', getCurrentUser);
 
 // обновляет информацию о пользователе
 users.patch('/me', validationUpdateUserInfo, updateUserInfo);

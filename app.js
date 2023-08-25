@@ -6,9 +6,13 @@ const helmet = require('helmet');
 const { errors } = require('celebrate');
 
 const cors = require('cors');
+const limiter = require('./middlewares/rateLimit');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { DB_URL_DEV } = require('./utils/config');
 
-const { PORT = 4000, DB_URL = 'mongodb://127.0.0.1:27017/bitfilmsdb' } = process.env;
+const { PORT = 4000 } = process.env;
+const { DB_URL = DB_URL_DEV } = process.env;
+const errorHandler = require('./middlewares/errorHandler');
 
 const options = {
   origin: [
@@ -26,11 +30,6 @@ const options = {
 };
 
 const app = express();
-// const auth = require('./middlewares/auth');
-// const {
-//   validationLogin,
-//   validationCreateUser,
-// } = require('./middlewares/validation/validationUser');
 
 app.use('*', cors(options));
 app.use(express.json());
@@ -53,18 +52,13 @@ mongoose
   });
 
 app.use(requestLogger);
+app.use(limiter);
 
 app.use(router);
 
 app.use(errorLogger);
 app.use(errors());
 
-app.use((err, req, res, next) => {
-  const { statusCode = 500, message } = err;
-  res.status(statusCode).send({
-    message: statusCode === 500 ? 'На сервере произошла ошибка' : message,
-  });
-  next();
-});
+app.use(errorHandler);
 
 app.listen(PORT, () => {});

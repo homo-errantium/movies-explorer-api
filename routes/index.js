@@ -13,8 +13,9 @@ const {
 router.post('/signup', validationCreateUser, createUser);
 router.post('/signin', validationLogin, login);
 
-router.use('/users', auth, users);
-router.use('/movies', auth, movies);
+router.use(auth);
+router.use('/users', users);
+router.use('/movies', movies);
 router.use('*', wrongRouter);
 
 module.exports = router;
